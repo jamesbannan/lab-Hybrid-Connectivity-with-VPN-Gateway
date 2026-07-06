@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworks_vnet1_name": {
+            "value": null
+        },
+        "virtualNetworks_vnet2_name": {
+            "value": null
+        },
+        "virtualNetworks_vnet3_name": {
+            "value": null
+        },
+        "virtualMachines_vnet1_vm_name": {
+            "value": null
+        },
+        "virtualMachines_vnet2_vm_name": {
+            "value": null
+        },
+        "virtualMachines_vnet3_vm_name": {
+            "value": null
+        },
+        "connections_vnet1_to_vnet2_name": {
+            "value": null
+        },
+        "connections_vnet2_to_vnet1_name": {
+            "value": null
+        },
+        "connections_vnet2_to_vnet3_name": {
+            "value": null
+        },
+        "connections_vnet3_to_vnet2_name": {
+            "value": null
+        },
+        "networkInterfaces_vnet1_vm_nic_name": {
+            "value": null
+        },
+        "networkInterfaces_vnet2_vm_nic_name": {
+            "value": null
+        },
+        "networkInterfaces_vnet3_vm_nic_name": {
+            "value": null
+        },
+        "publicIPAddresses_vnet1_vm_pip_name": {
+            "value": null
+        },
+        "networkSecurityGroups_nsgmin001_name": {
+            "value": null
+        },
+        "networkSecurityGroups_nsgmin002_name": {
+            "value": null
+        },
+        "networkSecurityGroups_nsgmin003_name": {
+            "value": null
+        },
+        "publicIPAddresses_vnet1_vng_pip_name": {
+            "value": null
+        },
+        "publicIPAddresses_vnet2_vng_pip_name": {
+            "value": null
+        },
+        "publicIPAddresses_vnet3_vng_pip_name": {
+            "value": null
+        },
+        "storageAccounts_stbobbcd2an2edc_name": {
+            "value": null
+        },
+        "virtualNetworkGateways_vnet1_vng_name": {
+            "value": null
+        },
+        "virtualNetworkGateways_vnet2_vng_name": {
+            "value": null
+        },
+        "virtualNetworkGateways_vnet3_vng_name": {
+            "value": null
+        },
+        "workspaces_log_bobbcd2an2edc_name": {
+            "value": null
+        }
+    }
+}

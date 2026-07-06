@@ -98,8 +98,8 @@
         "activeActive": false,
         "enableBgp": true,
         "sku": {
-          "name": "VpnGw2",
-          "tier": "VpnGw2"
+          "name": "VpnGw2AZ",
+          "tier": "VpnGw2AZ"
         },
         "vpnGatewayGeneration": "Generation2",
         "bgpSettings": {

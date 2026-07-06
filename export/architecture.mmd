@@ -1,0 +1,85 @@
+%% Azure hybrid connectivity topology derived from export/template.json
+%% Darkened text color for readability
+flowchart LR
+  classDef vnet fill:#eef3fb,stroke:#4c6dc0,stroke-width:1px,color:#1c2430,font-size:16px,text-align:left;
+  classDef subnet fill:#f9f9f9,stroke:#9aa7b1,stroke-dasharray: 3 2,color:#1c2430;
+  classDef gateway fill:#fef6e4,stroke:#c77d00,color:#1c2430;
+  classDef compute fill:#e8f5e9,stroke:#4b8b3b,color:#1c2430;
+  classDef resource fill:#ffffff,stroke:#b7bec5,color:#1c2430;
+
+  subgraph region["Azure"]
+    subgraph vnet1["Virtual Network: vnet1 (10.0.1.0/24,10.1.1.0/24)
+    NSG: nsgmin001"]
+      v1s1["subnet1 10.0.1.0/26
+      VM subnet"]:::subnet
+      v1s2["subnet2 10.0.1.64/26"]:::subnet
+      v1s3["subnet3 10.1.1.0/25"]:::subnet
+      v1s4["subnet4 10.1.1.128/25"]:::subnet
+      v1gw["GatewaySubnet 10.0.1.192/27"]:::subnet
+      vnet1vm["VM: vnet1-vm
+      NIC: vnet1-vm-nic 10.0.1.4
+      PIP: vnet1-vm-pip"]:::compute
+      vnet1gw["VPN Gateway: vnet1-vng
+      PIP: vnet1-vng-pip
+      ASN: 65010 (BGP)"]:::gateway
+      v1s1 --> vnet1vm
+      v1gw --> vnet1gw
+    end
+    class vnet1 vnet
+
+    subgraph vnet2["Virtual Network: vnet2 (10.0.2.0/24,10.1.2.0/24)
+    NSG: nsgmin002"]
+      v2s1["subnet1 10.0.2.0/26
+      VM subnet"]:::subnet
+      v2s2["subnet2 10.0.2.64/26"]:::subnet
+      v2s3["subnet3 10.1.2.0/25"]:::subnet
+      v2s4["subnet4 10.1.2.128/25"]:::subnet
+      v2gw["GatewaySubnet 10.0.2.192/27"]:::subnet
+      vnet2vm["VM: vnet2-vm
+      NIC: vnet2-vm-nic 10.0.2.4 (private only)"]:::compute
+      vnet2gw["VPN Gateway: vnet2-vng
+      PIP: vnet2-vng-pip
+      ASN: 65020 (BGP)"]:::gateway
+      v2s1 --> vnet2vm
+      v2gw --> vnet2gw
+    end
+    class vnet2 vnet
+
+    subgraph vnet3["Virtual Network: vnet3 (10.0.3.0/24,10.1.3.0/24)
+    NSG: nsgmin003"]
+      v3s1["subnet1 10.0.3.0/26
+      VM subnet"]:::subnet
+      v3s2["subnet2 10.0.3.64/26"]:::subnet
+      v3s3["subnet3 10.1.3.0/25"]:::subnet
+      v3s4["subnet4 10.1.3.128/25"]:::subnet
+      v3gw["GatewaySubnet 10.0.3.192/27"]:::subnet
+      vnet3vm["VM: vnet3-vm
+      NIC: vnet3-vm-nic 10.0.3.4 (private only)"]:::compute
+      vnet3gw["VPN: Gateway vnet3-vng
+      PIP: vnet3-vng-pip
+      ASN: 65030 (BGP)"]:::gateway
+      v3s1 --> vnet3vm
+      v3gw --> vnet3gw
+    end
+    class vnet3 vnet
+  end
+
+  %% VNet-to-VNet VPN connections (BGP enabled)
+  vnet1gw <-->|"vnet1-to-vnet2
+  VNet2VNet (IKEv2 + BGP)"| vnet2gw
+  vnet2gw <-->|"vnet2-to-vnet3
+  VNet2VNet (IKEv2 + BGP)"| vnet3gw
+
+  %% Diagnostics and monitoring
+  sa["Storage account
+  Boot diagnostics + gateway/IKE logs"]:::resource
+  law["Log Analytics workspace
+  Saved searches & tables for gateway/VM insights"]:::resource
+
+  vnet1vm -. diag .-> sa
+  vnet2vm -. diag .-> sa
+  vnet3vm -. diag .-> sa
+  vnet1gw -. diag .-> law
+  vnet2gw -. diag .-> law
+  vnet3gw -. diag .-> law
+
